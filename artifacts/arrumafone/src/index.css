@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 213 43% 10%;
+  --foreground: 180 31% 94%;
+  --border: 210 25% 21%;
+  --input: 210 25% 24%;
+  --ring: 174 67% 47%;
+  --card: 213 38% 13%;
+  --card-foreground: 180 31% 94%;
+  --card-border: 210 28% 23%;
+  --sidebar: 213 43% 10%;
+  --sidebar-foreground: 180 31% 94%;
+  --popover: 213 38% 13%;
+  --popover-foreground: 180 31% 94%;
+  --popover-border: 210 28% 23%;
+  --primary: 174 67% 47%;
+  --primary-foreground: 213 43% 10%;
+  --secondary: 211 33% 18%;
+  --secondary-foreground: 180 31% 94%;
+  --muted: 210 27% 17%;
+  --muted-foreground: 210 15% 65%;
+  --accent: 33 86% 64%;
+  --accent-foreground: 213 43% 10%;
+  --destructive: 3 75% 58%;
+  --destructive-foreground: 180 31% 94%;
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-serif: Georgia, serif;
+  --app-font-mono: 'Space Grotesk', monospace;
+  --radius: 1rem;
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: 213 43% 10%;
+  --foreground: 180 31% 94%;
+  --border: 210 25% 21%;
+  --input: 210 25% 24%;
+  --ring: 174 67% 47%;
+  --card: 213 38% 13%;
+  --card-foreground: 180 31% 94%;
+  --card-border: 210 28% 23%;
+  --sidebar: 213 43% 10%;
+  --sidebar-foreground: 180 31% 94%;
+  --popover: 213 38% 13%;
+  --popover-foreground: 180 31% 94%;
+  --popover-border: 210 28% 23%;
+  --primary: 174 67% 47%;
+  --primary-foreground: 213 43% 10%;
+  --secondary: 211 33% 18%;
+  --secondary-foreground: 180 31% 94%;
+  --muted: 210 27% 17%;
+  --muted-foreground: 210 15% 65%;
+  --accent: 33 86% 64%;
+  --accent-foreground: 213 43% 10%;
+  --destructive: 3 75% 58%;
+  --destructive-foreground: 180 31% 94%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    margin: 0;
+    min-width: 320px;
+  }
+  button, a, input, select, textarea { font: inherit; }
+  ::selection { background: hsl(var(--primary) / .28); color: hsl(var(--foreground)); }
+}
+
+@layer utilities {
+  .font-display { font-family: 'Space Grotesk', sans-serif; }
+  .text-balance { text-wrap: balance; }
+}
+
+:root { color-scheme: dark; }
+
+.site-shell { overflow: hidden; background: #0e1a2b; }
+.container-narrow { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+.eyebrow { color: #54d8cc; font: 700 11px/1 'Space Grotesk', sans-serif; letter-spacing: .18em; text-transform: uppercase; }
+.grid-lines {
+  background-image: linear-gradient(rgba(110, 222, 211, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(110, 222, 211, .05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: .032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+.shine-button { transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.shine-button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(84, 216, 204, .18); }
+.shine-button:active { transform: translateY(0); }
+.section-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(123, 198, 201, .3), transparent); }
+.device-shadow { filter: drop-shadow(22px 30px 22px rgba(2, 8, 17, .55)); }
+.form-input { width: 100%; border: 1px solid #2d4a53; border-radius: 12px; background: #172c3d; color: #e8f4f1; padding: 13px 14px; font-size: 13px; outline: none; transition: border-color .2s ease, background-color .2s ease; }
+.form-input::placeholder { color: #708e91; }
+.form-input:focus { border-color: #62ddd1; background: #193344; box-shadow: 0 0 0 3px rgba(98, 221, 209, .09); }
+.phone-float { animation: phone-float 5s ease-in-out infinite; }
+.orbit { animation: orbit 18s linear infinite; transform-origin: center; }
+.reveal { animation: reveal .7s both cubic-bezier(.16, 1, .3, 1); }
+.reveal-delay-1 { animation-delay: .1s; }
+.reveal-delay-2 { animation-delay: .2s; }
+.reveal-delay-3 { animation-delay: .3s; }
+.accordion-copy { animation: reveal .25s both ease-out; }
+.footer-curve { clip-path: ellipse(78% 100% at 50% 100%); }
+
+@keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes phone-float { 0%, 100% { transform: translateY(0) rotate(3deg); } 50% { transform: translateY(-13px) rotate(1deg); } }
+@keyframes orbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+@media (max-width: 767px) {
+  .container-narrow { width: min(100% - 32px, 600px); }
+  .footer-curve { clip-path: none; }
+}
