@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "ArrumaFone"
+description = "Site institucional e página de avaliação da ArrumaFone, assistência técnica de celulares em domicílio em São Paulo, com foco em troca de tela, bateria e conector USB."
+version = "1.0.0"
+id = "artifacts/arrumafone"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21744
+
+[services.development]
+run = "pnpm --filter @workspace/arrumafone run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/arrumafone", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/arrumafone/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21744"
+BASE_PATH = "/"
