@@ -29,6 +29,7 @@ const queryClient = new QueryClient();
 const WHATSAPP_URL = 'https://wa.me/5511976107921';
 const PHONE_LABEL = '(11) 97610-7921';
 const ADDRESS = 'Rua Julio Rebollo Perez, 322 — São Paulo, SP';
+const EVALUATION_API_URL = (import.meta.env.VITE_EVALUATION_API_URL || '').replace(/\/$/, '');
 
 function updateMeta(path: string) {
   const isAssessment = path === '/avaliacao';
@@ -280,25 +281,56 @@ function SiteFooter() {
   return <footer className="bg-[#091521] py-10"><div className="container-narrow flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"><div><Link href="/" data-testid="link-footer-home"><BrandMark /></Link><p className="mt-4 max-w-[270px] text-[12px] leading-5 text-[#718b91]">Conserto de celular em domicílio, com transparência e cuidado em São Paulo.</p></div><div className="flex flex-col items-start gap-4 sm:items-end"><div className="flex items-center gap-4"><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Falar com a ArrumaFone no WhatsApp" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-whatsapp"><MessageCircle size={17} /></a><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram da ArrumaFone" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-instagram"><Instagram size={17} /></a><a href={`tel:+5511976107921`} aria-label="Ligar para a ArrumaFone" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-phone"><Phone size={17} /></a></div><p className="text-[11px] text-[#607a80]">© 2024 ArrumaFone · São Paulo, SP</p></div></div></footer>;
 }
 
-type AssessmentFields = { name: string; phone: string; model: string; problem: string; preference: string; notes: string };
+type AssessmentFields = { name: string; phone: string; email: string; model: string; problem: string; preference: string; notes: string };
 
 function Assessment() {
   useEffect(() => { updateMeta('/avaliacao'); }, []);
-  const [fields, setFields] = useState<AssessmentFields>({ name: '', phone: '', model: '', problem: '', preference: 'Em casa', notes: '' });
+  const [fields, setFields] = useState<AssessmentFields>({ name: '', phone: '', email: '', model: '', problem: '', preference: 'Em casa', notes: '' });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const problems = ['Tela quebrada', 'Bateria ruim', 'Conector USB', 'Outro problema'];
   const setField = (key: keyof AssessmentFields, value: string) => setFields(current => ({ ...current, [key]: value }));
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!fields.name.trim() || !fields.phone.trim() || !fields.model.trim() || !fields.problem) {
-      setError('Preencha nome, telefone, modelo e problema para continuar.');
+    if (!fields.name.trim() || !fields.phone.trim() || !fields.email.trim() || !fields.model.trim() || !fields.problem) {
+      setError('Preencha nome, telefone, e-mail, modelo e problema para continuar.');
       return;
     }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.trim())) {
+      setError('Informe um e-mail válido para continuar.');
+      return;
+    }
+    if (!EVALUATION_API_URL) {
+      setError('O envio por e-mail ainda não está configurado. Tente novamente mais tarde.');
+      return;
+    }
+
     setError('');
-    const message = `Olá, ArrumaFone! Quero avaliar meu aparelho.%0A%0ANome: ${encodeURIComponent(fields.name)}%0ATelefone: ${encodeURIComponent(fields.phone)}%0AModelo: ${encodeURIComponent(fields.model)}%0AProblema: ${encodeURIComponent(fields.problem)}%0APreferência: ${encodeURIComponent(fields.preference)}%0AObservações: ${encodeURIComponent(fields.notes || 'Não informado')}`;
-    setSubmitted(true);
-    window.open(`${WHATSAPP_URL}?text=${message}`, '_blank', 'noopener,noreferrer');
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`${EVALUATION_API_URL}/evaluations`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...fields,
+          name: fields.name.trim(),
+          phone: fields.phone.trim(),
+          email: fields.email.trim(),
+          model: fields.model.trim(),
+          notes: fields.notes.trim(),
+        }),
+      });
+      const data = await response.json().catch(() => null) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(data?.error || 'Não foi possível enviar a avaliação agora. Tente novamente.');
+      }
+      setSubmitted(true);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : 'Não foi possível enviar a avaliação agora. Tente novamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <div className="site-shell noise min-h-[100dvh]">
@@ -310,7 +342,7 @@ function Assessment() {
           <div className="mx-auto max-w-[760px] text-center"><p className="eyebrow mb-6">Avaliação sem compromisso</p><h1 className="font-display text-[42px] font-bold leading-[.99] tracking-[-.06em] text-[#f0f8f5] sm:text-[64px]">Vamos entender o que<br /><span className="text-[#62ddd1]">seu celular precisa.</span></h1><p className="mx-auto mt-6 max-w-[520px] text-[16px] leading-7 text-[#9fb8ba]">Conte os detalhes abaixo. A avaliação é rápida e nossa equipe continua o atendimento pelo WhatsApp.</p></div>
           <div className="mx-auto mt-14 max-w-[760px] rounded-[26px] border border-[#2a4550] bg-[#122336] p-5 shadow-[0_22px_65px_rgba(1,9,18,.25)] sm:p-9">
             {submitted ? (
-              <div className="flex min-h-[420px] flex-col items-center justify-center text-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5edbd1] text-[#0e1a2b]"><Check size={30} /></span><h2 className="mt-7 font-display text-[30px] font-bold tracking-[-.04em] text-[#eff8f4]">Avaliação enviada.</h2><p className="mt-3 max-w-[390px] text-[14px] leading-6 text-[#9fb8ba]">Abrimos o WhatsApp com tudo preenchido. É só enviar a mensagem para a equipe da ArrumaFone continuar com você.</p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="shine-button mt-8 flex items-center gap-2 rounded-full bg-[#62ddd1] px-6 py-3.5 text-[13px] font-bold text-[#0e1a2b]" data-testid="link-confirmation-whatsapp"><MessageCircle size={16} /> Abrir WhatsApp novamente</a><button type="button" onClick={() => setSubmitted(false)} className="mt-5 text-[12px] font-semibold text-[#7fa0a1] hover:text-[#62ddd1]" data-testid="button-edit-assessment">Editar avaliação</button></div>
+              <div className="flex min-h-[420px] flex-col items-center justify-center text-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5edbd1] text-[#0e1a2b]"><Check size={30} /></span><h2 className="mt-7 font-display text-[30px] font-bold tracking-[-.04em] text-[#eff8f4]">Avaliação enviada com sucesso!</h2><p className="mt-3 max-w-[390px] text-[14px] leading-6 text-[#9fb8ba]">Entraremos em contato em breve.</p><button type="button" onClick={() => setSubmitted(false)} className="mt-8 text-[12px] font-semibold text-[#7fa0a1] hover:text-[#62ddd1]" data-testid="button-edit-assessment">Enviar outra avaliação</button></div>
             ) : (
               <form onSubmit={submit} noValidate data-testid="form-assessment">
                 <div className="mb-8 flex items-center justify-between border-b border-[#29434d] pb-5"><div><p className="eyebrow !text-[10px]">Passo único</p><p className="mt-2 font-display text-[19px] font-bold text-[#e9f5f1]">Fale um pouco sobre o aparelho</p></div><span className="rounded-full bg-[#1b3e49] px-3 py-1.5 text-[11px] font-bold text-[#69ddd3]">1 / 1</span></div>
@@ -319,11 +351,12 @@ function Assessment() {
                   <label className="block"><span className="mb-2 block text-[12px] font-bold text-[#bfd4d2]">Seu nome *</span><input value={fields.name} onChange={event => setField('name', event.target.value)} placeholder="Como podemos chamar você?" className="form-input" data-testid="input-name" /></label>
                   <label className="block"><span className="mb-2 block text-[12px] font-bold text-[#bfd4d2]">Telefone / WhatsApp *</span><input value={fields.phone} onChange={event => setField('phone', event.target.value)} type="tel" placeholder="(11) 99999-9999" className="form-input" data-testid="input-phone" /></label>
                 </div>
+                <label className="mt-5 block"><span className="mb-2 block text-[12px] font-bold text-[#bfd4d2]">Seu e-mail *</span><input value={fields.email} onChange={event => setField('email', event.target.value)} type="email" placeholder="voce@exemplo.com" className="form-input" data-testid="input-email" /></label>
                 <label className="mt-5 block"><span className="mb-2 block text-[12px] font-bold text-[#bfd4d2]">Qual é o modelo do aparelho? *</span><input value={fields.model} onChange={event => setField('model', event.target.value)} placeholder="Ex.: iPhone 12, Galaxy S22..." className="form-input" data-testid="input-model" /></label>
                 <fieldset className="mt-6"><legend className="mb-3 text-[12px] font-bold text-[#bfd4d2]">O que aconteceu? *</legend><div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{problems.map(problem => <button type="button" key={problem} onClick={() => setField('problem', problem)} className={`rounded-xl border px-3 py-3 text-left text-[12px] font-semibold transition-colors ${fields.problem === problem ? 'border-[#62ddd1] bg-[#1b4a50] text-[#76e4d9]' : 'border-[#2d4a53] bg-[#172c3d] text-[#9eb7ba] hover:border-[#548f91]'}`} data-testid={`button-problem-${problem.toLowerCase().replaceAll(' ', '-')}`}>{problem}</button>)}</div></fieldset>
                 <fieldset className="mt-6"><legend className="mb-3 text-[12px] font-bold text-[#bfd4d2]">Como você prefere ser atendido?</legend><div className="grid gap-2 sm:grid-cols-2">{['Em casa', 'Combinar pelo WhatsApp'].map(preference => <button type="button" key={preference} onClick={() => setField('preference', preference)} className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-[12px] font-semibold transition-colors ${fields.preference === preference ? 'border-[#62ddd1] bg-[#1b4a50] text-[#76e4d9]' : 'border-[#2d4a53] bg-[#172c3d] text-[#9eb7ba] hover:border-[#548f91]'}`} data-testid={`button-preference-${preference === 'Em casa' ? 'home' : 'whatsapp'}`}><span className={`h-3 w-3 rounded-full border ${fields.preference === preference ? 'border-[4px] border-[#62ddd1]' : 'border-[#78979a]'}`} />{preference}</button>)}</div></fieldset>
                 <label className="mt-6 block"><span className="mb-2 block text-[12px] font-bold text-[#bfd4d2]">Alguma observação?</span><textarea value={fields.notes} onChange={event => setField('notes', event.target.value)} placeholder="Quando começou, se o aparelho liga, detalhes importantes..." className="form-input min-h-[105px] resize-y" data-testid="input-notes" /></label>
-                <div className="mt-8 flex flex-col items-start justify-between gap-5 border-t border-[#29434d] pt-6 sm:flex-row sm:items-center"><p className="flex max-w-[330px] gap-2 text-[11px] leading-5 text-[#7f9b9e]"><ShieldCheck size={16} className="mt-0.5 shrink-0 text-[#62ddd1]" /> Seus dados são usados apenas para responder sua solicitação.</p><button type="submit" className="shine-button flex w-full items-center justify-center gap-2 rounded-full bg-[#62ddd1] px-6 py-4 text-[13px] font-bold text-[#0e1a2b] sm:w-auto" data-testid="button-submit-assessment">Enviar avaliação <ArrowRight size={16} /></button></div>
+                 <div className="mt-8 flex flex-col items-start justify-between gap-5 border-t border-[#29434d] pt-6 sm:flex-row sm:items-center"><p className="flex max-w-[330px] gap-2 text-[11px] leading-5 text-[#7f9b9e]"><ShieldCheck size={16} className="mt-0.5 shrink-0 text-[#62ddd1]" /> Seus dados são usados apenas para responder sua solicitação.</p><button type="submit" disabled={isSubmitting} className="shine-button flex w-full items-center justify-center gap-2 rounded-full bg-[#62ddd1] px-6 py-4 text-[13px] font-bold text-[#0e1a2b] disabled:cursor-wait disabled:opacity-70 sm:w-auto" data-testid="button-submit-assessment">{isSubmitting ? 'Enviando...' : 'Enviar avaliação'} <ArrowRight size={16} /></button></div>
               </form>
             )}
           </div>

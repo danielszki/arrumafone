@@ -25,7 +25,12 @@ app.use(
     },
   }),
 );
-app.use(cors());
+const allowedOrigins = (process.env.EVALUATION_ALLOWED_ORIGINS ?? "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins.length > 0 ? allowedOrigins : true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

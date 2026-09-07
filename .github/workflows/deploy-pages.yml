@@ -43,6 +43,7 @@ jobs:
         env:
           PORT: 4173
           BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_EVALUATION_API_URL: ${{ vars.VITE_EVALUATION_API_URL }}
         run: pnpm --filter @workspace/arrumafone run build
 
       - name: Preserve SPA routes

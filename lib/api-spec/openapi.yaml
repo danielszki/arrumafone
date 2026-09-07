@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: evaluations
+    description: Customer evaluation submissions
 paths:
   /healthz:
     get:
@@ -24,6 +26,42 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /evaluations:
+    post:
+      operationId: sendEvaluation
+      tags: [evaluations]
+      summary: Send a customer evaluation by email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvaluationInput"
+      responses:
+        "200":
+          description: Evaluation sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvaluationSent"
+        "400":
+          description: Invalid evaluation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "502":
+          description: Email provider error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "503":
+          description: Email service is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +71,58 @@ components:
           type: string
       required:
         - status
+    EvaluationInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        phone:
+          type: string
+          minLength: 1
+          maxLength: 40
+        email:
+          type: string
+          pattern: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+          maxLength: 254
+        model:
+          type: string
+          minLength: 1
+          maxLength: 160
+        problem:
+          type: string
+          minLength: 1
+          maxLength: 120
+        preference:
+          type: string
+          minLength: 1
+          maxLength: 80
+        notes:
+          type: string
+          maxLength: 3000
+      required:
+        - name
+        - phone
+        - email
+        - model
+        - problem
+        - preference
+    EvaluationSent:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 
