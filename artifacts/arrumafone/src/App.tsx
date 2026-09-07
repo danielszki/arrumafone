@@ -29,7 +29,9 @@ const queryClient = new QueryClient();
 const WHATSAPP_URL = 'https://wa.me/5511976107921';
 const PHONE_LABEL = '(11) 97610-7921';
 const ADDRESS = 'Rua Julio Rebollo Perez, 322 — São Paulo, SP';
-const EVALUATION_API_URL = (import.meta.env.VITE_EVALUATION_API_URL || '').replace(/\/$/, '');
+const EVALUATION_API_URL = (
+  import.meta.env.VITE_EVALUATION_API_URL || (import.meta.env.DEV ? '/api' : '')
+).replace(/\/$/, '');
 
 function updateMeta(path: string) {
   const isAssessment = path === '/avaliacao';
@@ -339,10 +341,10 @@ function Assessment() {
       </header>
       <main className="grid-lines">
         <section className="container-narrow pb-20 pt-16 sm:pb-28 sm:pt-24">
-          <div className="mx-auto max-w-[760px] text-center"><p className="eyebrow mb-6">Avaliação sem compromisso</p><h1 className="font-display text-[42px] font-bold leading-[.99] tracking-[-.06em] text-[#f0f8f5] sm:text-[64px]">Vamos entender o que<br /><span className="text-[#62ddd1]">seu celular precisa.</span></h1><p className="mx-auto mt-6 max-w-[520px] text-[16px] leading-7 text-[#9fb8ba]">Conte os detalhes abaixo. A avaliação é rápida e nossa equipe continua o atendimento pelo WhatsApp.</p></div>
+           <div className="mx-auto max-w-[760px] text-center"><p className="eyebrow mb-6">Avaliação sem compromisso</p><h1 className="font-display text-[42px] font-bold leading-[.99] tracking-[-.06em] text-[#f0f8f5] sm:text-[64px]">Vamos entender o que<br /><span className="text-[#62ddd1]">seu celular precisa.</span></h1><p className="mx-auto mt-6 max-w-[520px] text-[16px] leading-7 text-[#9fb8ba]">Conte os detalhes abaixo. A avaliação é rápida e todas as informações chegam por e-mail à nossa equipe.</p></div>
           <div className="mx-auto mt-14 max-w-[760px] rounded-[26px] border border-[#2a4550] bg-[#122336] p-5 shadow-[0_22px_65px_rgba(1,9,18,.25)] sm:p-9">
             {submitted ? (
-              <div className="flex min-h-[420px] flex-col items-center justify-center text-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5edbd1] text-[#0e1a2b]"><Check size={30} /></span><h2 className="mt-7 font-display text-[30px] font-bold tracking-[-.04em] text-[#eff8f4]">Avaliação enviada com sucesso!</h2><p className="mt-3 max-w-[390px] text-[14px] leading-6 text-[#9fb8ba]">Entraremos em contato em breve.</p><button type="button" onClick={() => setSubmitted(false)} className="mt-8 text-[12px] font-semibold text-[#7fa0a1] hover:text-[#62ddd1]" data-testid="button-edit-assessment">Enviar outra avaliação</button></div>
+              <div className="flex min-h-[420px] flex-col items-center justify-center text-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5edbd1] text-[#0e1a2b]"><Check size={30} /></span><h2 className="mt-7 font-display text-[30px] font-bold tracking-[-.04em] text-[#eff8f4]">Recebemos sua avaliação.</h2><p className="mt-3 max-w-[390px] text-[14px] leading-6 text-[#9fb8ba]">Avaliação enviada com sucesso! Entraremos em contato em breve.</p><button type="button" onClick={() => setSubmitted(false)} className="mt-8 text-[12px] font-semibold text-[#7fa0a1] hover:text-[#62ddd1]" data-testid="button-edit-assessment">Enviar outra avaliação</button></div>
             ) : (
               <form onSubmit={submit} noValidate data-testid="form-assessment">
                 <div className="mb-8 flex items-center justify-between border-b border-[#29434d] pb-5"><div><p className="eyebrow !text-[10px]">Passo único</p><p className="mt-2 font-display text-[19px] font-bold text-[#e9f5f1]">Fale um pouco sobre o aparelho</p></div><span className="rounded-full bg-[#1b3e49] px-3 py-1.5 text-[11px] font-bold text-[#69ddd3]">1 / 1</span></div>

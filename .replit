@@ -18,3 +18,10 @@ expertMode = true
 [postMerge]
 path = "scripts/post-merge.sh"
 timeoutMs = 20000
+
+[userenv]
+
+[userenv.shared]
+EVALUATION_ALLOWED_ORIGINS = "https://danielszki.github.io"
+EVALUATION_FROM_EMAIL = "ArrumaFone <onboarding@resend.dev>"
+EVALUATION_TO_EMAIL = "pixbarralinks@gmail.com"
