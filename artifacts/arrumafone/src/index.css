@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -132,6 +131,22 @@
 .shine-button { transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .shine-button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(84, 216, 204, .18); }
 .shine-button:active { transform: translateY(0); }
+.whatsapp-cta {
+  background-color: #16a34a;
+  color: #fff;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, .5), 0 8px 24px rgba(22, 163, 74, .26);
+  animation: whatsapp-pulse 2s ease-out infinite;
+}
+.whatsapp-cta:hover {
+  background-color: #15803d;
+  box-shadow: 0 10px 30px rgba(34, 197, 94, .38);
+}
+.whatsapp-floating {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 50;
+}
 .section-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(123, 198, 201, .3), transparent); }
 .device-shadow { filter: drop-shadow(22px 30px 22px rgba(2, 8, 17, .55)); }
 .form-input { width: 100%; border: 1px solid #2d4a53; border-radius: 12px; background: #172c3d; color: #e8f4f1; padding: 13px 14px; font-size: 13px; outline: none; transition: border-color .2s ease, background-color .2s ease; }
@@ -149,8 +164,16 @@
 @keyframes reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes phone-float { 0%, 100% { transform: translateY(0) rotate(3deg); } 50% { transform: translateY(-13px) rotate(1deg); } }
 @keyframes orbit { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes whatsapp-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, .46), 0 8px 24px rgba(22, 163, 74, .24); }
+  55% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0), 0 8px 28px rgba(22, 163, 74, .34); }
+}
 
 @media (max-width: 767px) {
   .container-narrow { width: min(100% - 32px, 600px); }
   .footer-curve { clip-path: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-cta { animation: none; }
 }

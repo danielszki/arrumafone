@@ -1,6 +1,6 @@
 # Configuração do envio de avaliações por e-mail
 
-O formulário da rota `/avaliacao` envia os dados para a API externa do ArrumaFone. A API usa o Resend para entregar a mensagem por e-mail. A chave do Resend fica somente no servidor; ela nunca é enviada para o navegador.
+O formulário da rota `/avaliacao` envia os dados para a função de API do ArrumaFone na Vercel. A API usa o Resend para entregar a mensagem por e-mail. A chave do Resend fica somente no servidor; ela nunca é enviada para o navegador.
 
 ## 1. Criar a conta e a chave do Resend
 
@@ -8,44 +8,45 @@ O formulário da rota `/avaliacao` envia os dados para a API externa do ArrumaFo
 2. Gere uma API key com permissão de envio.
 3. Verifique o domínio que será usado como remetente. Em testes, o Resend pode limitar o remetente ao endereço de onboarding da conta.
 
-## 2. Configurar a API/serverless
+## 2. Configurar a API no Vercel
 
-No ambiente onde `artifacts/api-server` estiver publicado, configure estas variáveis:
+O endpoint Express é publicado como função Vercel em `api/[...route].ts`. No projeto Vercel, configure:
 
 ```env
 RESEND_API_KEY=re_...
 EVALUATION_TO_EMAIL=pixbarralinks@gmail.com
 EVALUATION_FROM_EMAIL=ArrumaFone <contato@seu-dominio-verificado.com>
-EVALUATION_ALLOWED_ORIGINS=https://danielszki.github.io
+EVALUATION_ALLOWED_ORIGINS=https://arrumafone.vercel.app
 ```
 
-`RESEND_API_KEY` é segredo e deve ser adicionado pelo gerenciador de Secrets do provedor, nunca no código ou no GitHub Pages. O endereço `EVALUATION_TO_EMAIL` é o destinatário de todas as avaliações.
+Adicione `RESEND_API_KEY` em **Vercel → Project Settings → Environment Variables**, selecione Production e Preview, e marque-a como segredo. Nunca coloque essa chave no código ou em variáveis públicas `VITE_*`. `EVALUATION_TO_EMAIL` é o destinatário das avaliações.
 
-O endpoint usado pelo formulário é:
+O formulário chama `/api/evaluations` no mesmo domínio Vercel. A chave do Resend permanece apenas no servidor.
 
 ```text
-POST https://seu-endpoint-publico.example.com/api/evaluations
+POST https://arrumafone.vercel.app/api/evaluations
 ```
 
 O servidor não armazena os dados: valida o formulário e encaminha cada envio para o Resend.
 
-## 3. Configurar o site estático
+## 3. Configurar o site Vercel
 
-No ambiente de build do GitHub Pages, crie a variável pública `VITE_EVALUATION_API_URL` com a URL base da API, sem a barra final:
+No projeto Vercel, configure estas variáveis públicas de build:
 
 ```env
-VITE_EVALUATION_API_URL=https://seu-endpoint-publico.example.com/api
+VITE_EVALUATION_API_URL=/api
+VITE_PUBLIC_SITE_URL=https://arrumafone.vercel.app
 ```
 
-Essa URL pode ser pública. Ela não contém senha nem chave de API. O workflow usa essa variável somente durante o build do frontend.
+Para verificar o site no Google Search Console, crie uma propriedade de prefixo de URL e configure o código de verificação fornecido pelo Google como `VITE_GOOGLE_SITE_VERIFICATION`. O build injeta esse código no `<head>`; não é necessário colocá-lo no código-fonte.
 
-## 4. Teste de produção
+## 4. Enviar o sitemap ao Search Console
 
-Depois de configurar as variáveis:
+Depois que o domínio Vercel estiver publicado e verificado:
 
-1. Publique/reinicie a API e confirme `GET /api/healthz`.
-2. Abra `/avaliacao` no site do GitHub Pages.
-3. Preencha todos os campos e envie.
-4. Confirme a mensagem de sucesso no site e a chegada do e-mail com o assunto `Nova avaliação recebida - ArrumaFone`.
+1. Confirme que `/robots.txt` e `/sitemap.xml` no domínio Vercel retornam os arquivos corretos.
+2. No Search Console, abra **Sitemaps** e envie `https://arrumafone.vercel.app/sitemap.xml` (substitua pelo domínio principal se ele for diferente).
+3. Teste `/avaliacao` diretamente no navegador.
+4. Envie uma avaliação e confirme a chegada do e-mail com o assunto `Nova avaliação recebida - ArrumaFone`.
 
-Se o envio falhar, o formulário mostra o erro e continua disponível para uma nova tentativa.
+O mapa incorporado usa o endereço informado no site. Para aparecer como empresa local nos resultados do Google Maps, a ArrumaFone também precisa ter um Perfil da Empresa no Google verificado e com nome, telefone e endereço consistentes.

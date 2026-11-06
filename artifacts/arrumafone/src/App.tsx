@@ -29,20 +29,24 @@ const queryClient = new QueryClient();
 const WHATSAPP_URL = 'https://wa.me/5511976107921';
 const PHONE_LABEL = '(11) 97610-7921';
 const ADDRESS = 'Rua Julio Rebollo Perez, 322 — São Paulo, SP';
+const ADDRESS_QUERY = encodeURIComponent('Rua Julio Rebollo Perez, 322, São Paulo, SP, Brasil');
+const MAP_EMBED_URL = `https://maps.google.com/maps?q=${ADDRESS_QUERY}&output=embed`;
+const MAP_DIRECTIONS_URL = `https://www.google.com/maps/search/?api=1&query=${ADDRESS_QUERY}`;
 const EVALUATION_API_URL = (
-  import.meta.env.VITE_EVALUATION_API_URL || (import.meta.env.DEV ? '/api' : '')
+  import.meta.env.VITE_EVALUATION_API_URL || '/api'
 ).replace(/\/$/, '');
 
 function updateMeta(path: string) {
   const isAssessment = path === '/avaliacao';
   const title = isAssessment
-    ? 'Avaliação de conserto de celular | ArrumaFone'
-    : 'Conserto de celular em domicílio em São Paulo | ArrumaFone';
+    ? 'Avaliação de conserto de celular em São Paulo | ArrumaFone'
+    : 'Conserto de celular em São Paulo (SP) | ArrumaFone';
   const description = isAssessment
-    ? 'Conte o que aconteceu com seu celular e receba uma avaliação rápida da ArrumaFone direto pelo WhatsApp.'
-    : 'Conserto de celular em domicílio em São Paulo. Troca de tela, bateria e conector USB com técnico de confiança, no conforto da sua casa.';
+    ? 'Solicite avaliação para conserto de celular, troca de tela, bateria ou conector em São Paulo. Informe o modelo e receba retorno por e-mail sem compromisso.'
+    : 'Conserto de celular em São Paulo: troca de tela, bateria e conector USB em domicílio, com orçamento claro e agendamento fácil pelo WhatsApp. Peça orçamento.';
   const base = (import.meta.env.VITE_PUBLIC_SITE_URL || window.location.origin).replace(/\/$/, '');
   const url = `${base}${isAssessment ? '/avaliacao' : '/'}`;
+  const image = `${base}/og-image.png`;
   document.title = title;
   const set = (selector: string, value: string, attr = 'content') => {
     const node = document.querySelector(selector);
@@ -53,8 +57,10 @@ function updateMeta(path: string) {
   set('meta[property="og:title"]', title);
   set('meta[property="og:description"]', description);
   set('meta[property="og:url"]', url);
+  set('meta[property="og:image"]', image);
   set('meta[name="twitter:title"]', title);
   set('meta[name="twitter:description"]', description);
+  set('meta[name="twitter:image"]', image);
 }
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
@@ -91,8 +97,8 @@ function SiteHeader() {
           <a href={`tel:+5511976107921`} className="flex items-center gap-2 text-[13px] font-semibold text-[#a1b3bc] hover:text-[#f1f8f6]" data-testid="link-phone-header">
             <Phone size={15} /> {PHONE_LABEL}
           </a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="shine-button flex items-center gap-2 rounded-full bg-[#62ddd1] px-5 py-3 text-[12px] font-bold text-[#0e1a2b]" data-testid="link-whatsapp-header">
-            <MessageCircle size={15} /> Falar com a gente
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whatsapp-cta shine-button flex items-center gap-2 rounded-full px-5 py-3 text-[12px] font-bold" data-testid="link-whatsapp-header">
+            <MessageCircle size={15} /> Falar pelo WhatsApp
           </a>
         </div>
         <button type="button" onClick={() => setMenuOpen(!menuOpen)} className="rounded-lg p-2 text-[#d8ebe8] md:hidden" aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} data-testid="button-mobile-menu">
@@ -106,7 +112,7 @@ function SiteHeader() {
             <a href="#como-funciona" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-[#b4c7cc]" data-testid="mobile-link-how">Como funciona</a>
             <a href="#depoimentos" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-[#b4c7cc]" data-testid="mobile-link-reviews">Avaliações</a>
             <a href="#duvidas" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-[#b4c7cc]" data-testid="mobile-link-faq">Dúvidas</a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex w-fit items-center gap-2 rounded-full bg-[#62ddd1] px-5 py-3 text-sm font-bold text-[#0e1a2b]" data-testid="mobile-link-whatsapp">Falar pelo WhatsApp <ArrowRight size={15} /></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whatsapp-cta flex w-fit items-center gap-2 rounded-full px-5 py-3 text-sm font-bold" data-testid="mobile-link-whatsapp">Falar pelo WhatsApp <ArrowRight size={15} /></a>
           </div>
         </nav>
       )}
@@ -150,9 +156,9 @@ function PhoneIllustration() {
 }
 
 const services = [
-  { icon: MonitorSmartphone, title: 'Troca de tela', copy: 'Seu aparelho de volta à vida, com toque preciso e acabamento caprichado.', tag: 'Mais procurado' },
-  { icon: BatteryCharging, title: 'Troca de bateria', copy: 'Mais autonomia para o seu dia, sem depender da tomada a todo instante.', tag: 'Dia a dia' },
-  { icon: Usb, title: 'Conector USB', copy: 'Carga e conexão confiáveis para você parar de procurar a posição certa.', tag: 'Diagnóstico' },
+  { icon: MonitorSmartphone, title: 'Troca de tela para celular', copy: 'Substituição da tela com diagnóstico do toque e acabamento cuidadoso.', tag: 'Mais procurado' },
+  { icon: BatteryCharging, title: 'Troca de bateria de celular', copy: 'Mais autonomia para o seu dia, com avaliação da bateria do aparelho.', tag: 'Dia a dia' },
+  { icon: Usb, title: 'Reparo de conector USB', copy: 'Diagnóstico do conector de carga para identificar falhas de conexão.', tag: 'Diagnóstico' },
 ];
 
 function ServiceCard({ service, index }: { service: typeof services[number]; index: number }) {
@@ -190,11 +196,11 @@ function Home() {
           <div className="container-narrow grid min-h-[650px] items-center gap-8 pb-16 pt-14 md:grid-cols-[1.05fr_.95fr] md:pb-20 md:pt-20">
             <div className="reveal relative z-10">
               <div className="eyebrow mb-6 flex items-center gap-3"><span className="h-px w-8 bg-[#5edbd1]" /> Assistência que vai até você</div>
-              <h1 className="font-display max-w-[650px] text-[45px] font-bold leading-[.98] tracking-[-.065em] text-[#f0f8f5] sm:text-[62px] lg:text-[76px]">Seu celular consertado.<br /><span className="text-[#62ddd1]">Sem sair de casa.</span></h1>
-              <p className="mt-7 max-w-[475px] text-[17px] leading-7 text-[#a9bec1]">Tela quebrada, bateria que não dura ou conector falhando? Um técnico de confiança resolve com cuidado, no seu endereço, em São Paulo.</p>
+              <h1 className="font-display max-w-[650px] text-[45px] font-bold leading-[.98] tracking-[-.065em] text-[#f0f8f5] sm:text-[62px] lg:text-[76px]">Conserto de celular<br /><span className="text-[#62ddd1]">em São Paulo.</span></h1>
+              <p className="mt-7 max-w-[475px] text-[17px] leading-7 text-[#a9bec1]">Troca de tela, bateria e conector USB com atendimento em domicílio. Um técnico de confiança resolve com cuidado, no endereço combinado.</p>
               <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
                 <Link href="/avaliacao" className="shine-button flex items-center gap-3 rounded-full bg-[#62ddd1] px-6 py-4 text-[13px] font-bold text-[#0e1a2b]" data-testid="link-start-assessment">Avaliar meu aparelho <ArrowRight size={17} /></Link>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-2 py-3 text-[13px] font-bold text-[#d3e6e3] transition-colors hover:text-[#62ddd1]" data-testid="link-hero-whatsapp"><MessageCircle size={16} className="text-[#62ddd1]" /> Falar pelo WhatsApp</a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whatsapp-cta shine-button flex items-center gap-2 rounded-full px-5 py-3 text-[13px] font-bold" data-testid="link-hero-whatsapp"><MessageCircle size={16} /> Falar pelo WhatsApp</a>
               </div>
               <div className="mt-12 flex flex-wrap items-center gap-x-7 gap-y-3 text-[11px] font-semibold text-[#789599]">
                 <span className="flex items-center gap-2"><Check size={14} className="text-[#62ddd1]" /> Orçamento antes do reparo</span>
@@ -243,12 +249,18 @@ function Home() {
 
         <section className="bg-[#d4e7df] py-16 text-[#132536]" aria-label="Área de atendimento">
           <div className="container-narrow grid items-center gap-10 md:grid-cols-[1fr_1.15fr]">
-            <div><p className="eyebrow !text-[#177d78]">Onde atendemos</p><h2 className="mt-4 font-display text-[36px] font-bold leading-[1.04] tracking-[-.05em] sm:text-[48px]">Perto de você,<br />quando precisar.</h2><p className="mt-5 max-w-[390px] text-[15px] leading-7 text-[#4c6b6d]">Nossa base fica em São Paulo. Envie seu bairro e endereço para confirmarmos a disponibilidade do atendimento em domicílio.</p><div className="mt-7 flex items-start gap-3 text-[13px] font-bold text-[#255355]"><MapPin size={19} className="mt-0.5 text-[#178e86]" /><span>{ADDRESS}<br /><small className="font-normal text-[#6b8584]">Atendimento com hora marcada</small></span></div></div>
-            <div className="relative h-[270px] overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2]" data-testid="map-area">
-              <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'linear-gradient(35deg, transparent 45%, #8ebdb5 46%, #8ebdb5 47%, transparent 48%), linear-gradient(125deg, transparent 42%, #8ebdb5 43%, #8ebdb5 44%, transparent 45%), linear-gradient(90deg, transparent 49%, #98c5bc 50%, transparent 51%)', backgroundSize: '150px 110px, 180px 140px, 90px 90px' }} />
-              <div className="absolute left-[25%] top-[37%] h-28 w-28 rounded-full border border-[#69ada4]/45" /><div className="absolute left-[25%] top-[37%] h-28 w-28 scale-[1.65] rounded-full border border-[#69ada4]/25" />
-              <div className="absolute left-[47%] top-[39%] flex h-12 w-12 items-center justify-center rounded-full bg-[#123545] text-[#68dfd2] shadow-xl"><MapPin size={21} /></div>
-              <div className="absolute bottom-4 left-4 rounded-lg bg-[#e3f0e9]/90 px-3 py-2 text-[10px] font-bold text-[#375c5d] shadow-sm">São Paulo · atendimento local</div>
+            <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2]" data-testid="map-area">
+              <iframe
+                src={MAP_EMBED_URL}
+                title={`Mapa da localização: ${ADDRESS}`}
+                className="h-[300px] w-full border-0 sm:h-[360px]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a href={MAP_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="block bg-[#e3f0e9] px-4 py-3 text-center text-[12px] font-bold text-[#255355] hover:bg-white" data-testid="link-google-maps">
+                <MapPin size={15} className="mr-2 inline text-[#178e86]" />Abrir endereço no Google Maps
+              </a>
             </div>
           </div>
         </section>
@@ -264,7 +276,7 @@ function Home() {
 
         <section className="bg-[#101e2e] py-24" id="duvidas">
           <div className="container-narrow grid gap-12 md:grid-cols-[.7fr_1.3fr]">
-            <div><p className="eyebrow mb-5">Ainda com dúvida?</p><h2 className="font-display text-[37px] font-bold leading-[1.04] tracking-[-.05em] text-[#eff8f4] sm:text-[49px]">A resposta pode estar aqui.</h2><p className="mt-5 max-w-[300px] text-[14px] leading-6 text-[#8ea7aa]">Se não estiver, é só chamar no WhatsApp. A gente responde de verdade.</p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full border border-[#4bbcb5] px-5 py-3 text-[12px] font-bold text-[#69ddd3] hover:bg-[#183943]" data-testid="link-faq-whatsapp">Tirar dúvida no WhatsApp <ArrowRight size={15} /></a></div>
+            <div><p className="eyebrow mb-5">Ainda com dúvida?</p><h2 className="font-display text-[37px] font-bold leading-[1.04] tracking-[-.05em] text-[#eff8f4] sm:text-[49px]">A resposta pode estar aqui.</h2><p className="mt-5 max-w-[300px] text-[14px] leading-6 text-[#8ea7aa]">Se não estiver, é só chamar no WhatsApp. A gente responde de verdade.</p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whatsapp-cta mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-[12px] font-bold" data-testid="link-faq-whatsapp"><MessageCircle size={15} /> Falar pelo WhatsApp</a></div>
             <div className="divide-y divide-[#29414c] border-y border-[#29414c]">{faqs.map(([question, answer], index) => <div key={question} data-testid={`faq-item-${index}`}><button type="button" onClick={() => setOpenFaq(openFaq === index ? null : index)} className="flex w-full items-center justify-between gap-5 py-5 text-left" data-testid={`button-faq-${index}`}><span className="text-[14px] font-semibold text-[#d9e9e5]">{question}</span><ChevronDown size={17} className={`shrink-0 text-[#62ddd1] transition-transform ${openFaq === index ? 'rotate-180' : ''}`} /></button>{openFaq === index && <p className="accordion-copy -mt-2 max-w-[650px] pb-5 pr-8 text-[13px] leading-6 text-[#8ea7aa]">{answer}</p>}</div>)}</div>
           </div>
         </section>
@@ -341,7 +353,7 @@ function Assessment() {
       </header>
       <main className="grid-lines">
         <section className="container-narrow pb-20 pt-16 sm:pb-28 sm:pt-24">
-           <div className="mx-auto max-w-[760px] text-center"><p className="eyebrow mb-6">Avaliação sem compromisso</p><h1 className="font-display text-[42px] font-bold leading-[.99] tracking-[-.06em] text-[#f0f8f5] sm:text-[64px]">Vamos entender o que<br /><span className="text-[#62ddd1]">seu celular precisa.</span></h1><p className="mx-auto mt-6 max-w-[520px] text-[16px] leading-7 text-[#9fb8ba]">Conte os detalhes abaixo. A avaliação é rápida e todas as informações chegam por e-mail à nossa equipe.</p></div>
+           <div className="mx-auto max-w-[760px] text-center"><p className="eyebrow mb-6">Avaliação sem compromisso</p><h1 className="font-display text-[42px] font-bold leading-[.99] tracking-[-.06em] text-[#f0f8f5] sm:text-[64px]">Avaliação para conserto<br /><span className="text-[#62ddd1]">de celular em São Paulo.</span></h1><p className="mx-auto mt-6 max-w-[520px] text-[16px] leading-7 text-[#9fb8ba]">Conte os detalhes abaixo. A avaliação é rápida e todas as informações chegam por e-mail à nossa equipe.</p></div>
           <div className="mx-auto mt-14 max-w-[760px] rounded-[26px] border border-[#2a4550] bg-[#122336] p-5 shadow-[0_22px_65px_rgba(1,9,18,.25)] sm:p-9">
             {submitted ? (
               <div className="flex min-h-[420px] flex-col items-center justify-center text-center"><span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#5edbd1] text-[#0e1a2b]"><Check size={30} /></span><h2 className="mt-7 font-display text-[30px] font-bold tracking-[-.04em] text-[#eff8f4]">Recebemos sua avaliação.</h2><p className="mt-3 max-w-[390px] text-[14px] leading-6 text-[#9fb8ba]">Avaliação enviada com sucesso! Entraremos em contato em breve.</p><button type="button" onClick={() => setSubmitted(false)} className="mt-8 text-[12px] font-semibold text-[#7fa0a1] hover:text-[#62ddd1]" data-testid="button-edit-assessment">Enviar outra avaliação</button></div>
@@ -372,7 +384,26 @@ function Assessment() {
 function Router() {
   const [location] = useLocation();
   useEffect(() => { updateMeta(location); }, [location]);
-  return <RoutedErrorBoundary><Switch><Route path="/" component={Home} /><Route path="/avaliacao" component={Assessment} /><Route component={NotFound} /></Switch></RoutedErrorBoundary>;
+  return <>
+    <RoutedErrorBoundary><Switch><Route path="/" component={Home} /><Route path="/avaliacao" component={Assessment} /><Route component={NotFound} /></Switch></RoutedErrorBoundary>
+    {location !== '/avaliacao' && <WhatsAppFloatingButton />}
+  </>;
+}
+
+function WhatsAppFloatingButton() {
+  return (
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whatsapp-cta whatsapp-floating inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-[13px] font-bold"
+      aria-label={`Falar com a ArrumaFone pelo WhatsApp no número ${PHONE_LABEL}`}
+      data-testid="link-floating-whatsapp"
+    >
+      <MessageCircle size={18} />
+      <span>Falar pelo WhatsApp</span>
+    </a>
+  );
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {

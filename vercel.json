@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm run typecheck:libs && PORT=4173 BASE_PATH=/ pnpm --filter @workspace/arrumafone run build",
+  "outputDirectory": "artifacts/arrumafone/dist/public",
+  "rewrites": [
+    {
+      "source": "/avaliacao",
+      "destination": "/avaliacao/index.html"
+    },
+    {
+      "source": "/avaliacao/",
+      "destination": "/avaliacao/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
