@@ -16,7 +16,7 @@ O endpoint Express é publicado como função Vercel em `api/[...route].ts`. No 
 RESEND_API_KEY=re_...
 EVALUATION_TO_EMAIL=pixbarralinks@gmail.com
 EVALUATION_FROM_EMAIL=ArrumaFone <contato@seu-dominio-verificado.com>
-EVALUATION_ALLOWED_ORIGINS=https://seu-dominio-vercel.app
+EVALUATION_ALLOWED_ORIGINS=https://arrumafone.vercel.app
 ```
 
 Adicione `RESEND_API_KEY` em **Vercel → Project Settings → Environment Variables**, selecione Production e Preview, e marque-a como segredo. Nunca coloque essa chave no código ou em variáveis públicas `VITE_*`. `EVALUATION_TO_EMAIL` é o destinatário das avaliações.
@@ -24,7 +24,7 @@ Adicione `RESEND_API_KEY` em **Vercel → Project Settings → Environment Varia
 O formulário chama `/api/evaluations` no mesmo domínio Vercel. A chave do Resend permanece apenas no servidor.
 
 ```text
-POST https://seu-dominio-vercel.app/api/evaluations
+POST https://arrumafone.vercel.app/api/evaluations
 ```
 
 O servidor não armazena os dados: valida o formulário e encaminha cada envio para o Resend.
@@ -35,7 +35,7 @@ No projeto Vercel, configure estas variáveis públicas de build:
 
 ```env
 VITE_EVALUATION_API_URL=/api
-VITE_PUBLIC_SITE_URL=https://seu-dominio-vercel.app
+VITE_PUBLIC_SITE_URL=https://arrumafone.vercel.app
 ```
 
 Para verificar o site no Google Search Console, crie uma propriedade de prefixo de URL e configure o código de verificação fornecido pelo Google como `VITE_GOOGLE_SITE_VERIFICATION`. O build injeta esse código no `<head>`; não é necessário colocá-lo no código-fonte.
@@ -45,7 +45,7 @@ Para verificar o site no Google Search Console, crie uma propriedade de prefixo 
 Depois que o domínio Vercel estiver publicado e verificado:
 
 1. Confirme que `/robots.txt` e `/sitemap.xml` no domínio Vercel retornam os arquivos corretos.
-2. No Search Console, abra **Sitemaps** e envie `https://seu-dominio-vercel.app/sitemap.xml`.
+2. No Search Console, abra **Sitemaps** e envie `https://arrumafone.vercel.app/sitemap.xml`.
 3. Teste `/avaliacao` diretamente no navegador.
 4. Envie uma avaliação e confirme a chegada do e-mail com o assunto `Nova avaliação recebida - ArrumaFone`.
 

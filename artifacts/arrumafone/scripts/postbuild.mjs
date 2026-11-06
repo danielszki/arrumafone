@@ -6,16 +6,11 @@ const packageDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".
 const outputDir = path.resolve(packageDir, "dist/public");
 const configuredSiteUrl =
   process.env.VITE_PUBLIC_SITE_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL;
-
-if (!configuredSiteUrl && process.env.VERCEL === "1") {
-  throw new Error(
-    "Set VITE_PUBLIC_SITE_URL or enable VERCEL_PROJECT_PRODUCTION_URL before the production build.",
-  );
-}
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+  "https://arrumafone.vercel.app";
 
 const siteUrl = resolveSiteUrl(
-  configuredSiteUrl || "http://localhost:4173",
+  configuredSiteUrl,
 );
 
 const homeTitle = "Conserto de celular em São Paulo (SP) | ArrumaFone";
