@@ -1,1 +1,2 @@
 - [Vercel connector permissions](vercel-connector-permissions.md) — a connected Vercel integration may still lack project-management access; verify permissions before promising a deploy.
+- [Vercel Express typing](vercel-express-typing.md) — type root serverless handlers at the Node HTTP boundary instead of inferring a callable type from an Express app.
