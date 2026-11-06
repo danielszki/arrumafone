@@ -1,0 +1,1 @@
+- [Vercel connector permissions](vercel-connector-permissions.md) — a connected Vercel integration may still lack project-management access; verify permissions before promising a deploy.
