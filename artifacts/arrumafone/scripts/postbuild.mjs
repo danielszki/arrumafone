@@ -4,10 +4,18 @@ import { fileURLToPath } from "node:url";
 
 const packageDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputDir = path.resolve(packageDir, "dist/public");
-const siteUrl = resolveSiteUrl(
+const configuredSiteUrl =
   process.env.VITE_PUBLIC_SITE_URL ||
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-    "https://arrumafone.vercel.app",
+  process.env.VERCEL_PROJECT_PRODUCTION_URL;
+
+if (!configuredSiteUrl && process.env.VERCEL === "1") {
+  throw new Error(
+    "Set VITE_PUBLIC_SITE_URL or enable VERCEL_PROJECT_PRODUCTION_URL before the production build.",
+  );
+}
+
+const siteUrl = resolveSiteUrl(
+  configuredSiteUrl || "http://localhost:4173",
 );
 
 const homeTitle = "Conserto de celular em São Paulo (SP) | ArrumaFone";
