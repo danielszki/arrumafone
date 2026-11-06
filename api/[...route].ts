@@ -1,11 +1,17 @@
+import type { IncomingMessage, ServerResponse } from "node:http";
 import app from "../artifacts/api-server/src/app";
 
 export default function handler(
-  req: Parameters<typeof app>[0],
-  res: Parameters<typeof app>[1],
+  req: IncomingMessage,
+  res: ServerResponse,
 ): void {
   req.url = normalizeApiPath(req.url ?? "/");
-  app(req, res);
+  const expressHandler = app as unknown as (
+    request: IncomingMessage,
+    response: ServerResponse,
+  ) => void;
+
+  expressHandler(req, res);
 }
 
 function normalizeApiPath(url: string): string {
