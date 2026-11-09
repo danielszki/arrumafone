@@ -6,7 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export * from './errorResponse';
-export * from './evaluationInput';
-export * from './evaluationSent';
-export * from './healthStatus';
+export * from './errorResponse.js';
+export * from './evaluationInput.js';
+export * from './evaluationSent.js';
+export * from './healthStatus.js';
