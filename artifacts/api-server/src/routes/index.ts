@@ -1,8 +1,8 @@
-import { Router, type Router as ExpressRouter } from "express";
+import express from "express";
 import evaluationsRouter from "./evaluations.js";
 import healthRouter from "./health.js";
 
-const router: ExpressRouter = Router();
+const router = express.Router();
 
 router.use(healthRouter);
 router.use(evaluationsRouter);
