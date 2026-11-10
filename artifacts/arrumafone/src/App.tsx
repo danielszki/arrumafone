@@ -248,8 +248,8 @@ function Home() {
         </section>
 
         <section className="bg-[#d4e7df] py-16 text-[#132536]" aria-label="Área de atendimento">
-          <div className="w-full grid items-center gap-10 md:grid-cols-[1fr_1.15fr] px-6 sm:px-12 lg:px-24">
-            <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2] w-full" data-testid="map-area">
+          <div className="w-full grid justify-items-center gap-10 px-6 sm:px-12 lg:px-24">
+            <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2] w-full max-w-[600px]" data-testid="map-area">
               <iframe
                 src={MAP_EMBED_URL}
                 title={`Mapa da localização: ${ADDRESS}`}
