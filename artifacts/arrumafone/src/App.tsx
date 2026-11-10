@@ -164,7 +164,7 @@ const services = [
 function ServiceCard({ service, index }: { service: typeof services[number]; index: number }) {
   const Icon = service.icon;
   return (
-    <article className={`group relative overflow-hidden rounded-[22px] border border-[#2a4650] bg-[#132638] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#58d8cd]/60 hover:bg-[#173143] ${index === 1 ? 'md:mt-10' : ''}`} data-testid={`card-service-${index}`}>
+    <article className="group relative overflow-hidden rounded-[22px] border border-[#2a4650] bg-[#132638] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#58d8cd]/60 hover:bg-[#173143]" data-testid={`card-service-${index}`}>
       <div className="mb-10 flex items-start justify-between">
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1d4550] text-[#6be1d5] transition-transform group-hover:rotate-[-6deg]"><Icon size={22} /></span>
         <span className="rounded-full border border-[#35535a] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.12em] text-[#8faeb0]">{service.tag}</span>
@@ -248,8 +248,8 @@ function Home() {
         </section>
 
         <section className="bg-[#d4e7df] py-16 text-[#132536]" aria-label="Área de atendimento">
-          <div className="container-narrow grid items-center gap-10 md:grid-cols-[1fr_1.15fr]">
-            <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2]" data-testid="map-area">
+          <div className="w-full grid items-center gap-10 md:grid-cols-[1fr_1.15fr] px-6 sm:px-12 lg:px-24">
+            <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2] w-full" data-testid="map-area">
               <iframe
                 src={MAP_EMBED_URL}
                 title={`Mapa da localização: ${ADDRESS}`}
