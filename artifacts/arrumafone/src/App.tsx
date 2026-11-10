@@ -248,7 +248,7 @@ function Home() {
         </section>
 
         <section className="bg-[#d4e7df] py-16 text-[#132536]" aria-label="Área de atendimento">
-          <div className="w-full grid justify-items-center gap-10 px-6 sm:px-12 lg:px-24">
+          <div className="w-full grid gap-10 md:grid-cols-[1fr_1fr] px-6 sm:px-12 lg:px-24 items-center">
             <div className="overflow-hidden rounded-[24px] border border-[#a9cbc3] bg-[#bddbd2] w-full max-w-[600px]" data-testid="map-area">
               <iframe
                 src={MAP_EMBED_URL}
@@ -261,6 +261,29 @@ function Home() {
               <a href={MAP_DIRECTIONS_URL} target="_blank" rel="noopener noreferrer" className="block bg-[#e3f0e9] px-4 py-3 text-center text-[12px] font-bold text-[#255355] hover:bg-white" data-testid="link-google-maps">
                 <MapPin size={15} className="mr-2 inline text-[#178e86]" />Abrir endereço no Google Maps
               </a>
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full bg-[#a9cbc3] text-[#132536]"><MapPin size={18} /></div>
+                <div>
+                  <p className="font-bold text-[#132536]">Endereço</p>
+                  <p className="text-[#4a6b6e] leading-5">{ADDRESS}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full bg-[#a9cbc3] text-[#132536]"><Phone size={18} /></div>
+                <div>
+                  <p className="font-bold text-[#132536]">Telefone</p>
+                  <a href={`tel:+5511976107921`} className="text-[#178e86] font-semibold hover:underline">{PHONE_LABEL}</a>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-full bg-[#a9cbc3] text-[#132536]"><MessageCircle size={18} /></div>
+                <div>
+                  <p className="font-bold text-[#132536]">WhatsApp</p>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#178e86] font-semibold hover:underline">Falar pelo WhatsApp</a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
