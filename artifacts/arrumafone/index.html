@@ -27,7 +27,8 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="__SITE_URL__/" />
-    <meta property="og:image" content="__SITE_URL__/og-image.png" />
+    <meta property="og:image" content="__SITE_URL__/og-image.webp" />
+    <meta property="og:image:type" content="image/webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="pt_BR" />
@@ -42,20 +43,33 @@
       name="twitter:description"
       content="Conserto de celular com troca de tela, bateria e conector USB em domicílio, com orçamento claro e agendamento fácil pelo WhatsApp. Peça orçamento."
     />
-    <meta name="twitter:image" content="__SITE_URL__/og-image.png" />
+    <meta name="twitter:image" content="__SITE_URL__/og-image.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "ArrumaFone",
         "url": "__SITE_URL__/",
-        "image": "__SITE_URL__/og-image.png",
+        "image": "__SITE_URL__/og-image.webp",
         "description": "Conserto de celular em domicílio em São Paulo, incluindo troca de tela, bateria e reparo de conector USB.",
         "telephone": "+55 11 97610-7921",
         "address": {
@@ -106,8 +120,82 @@
         "sameAs": ["https://wa.me/5511976107921"]
       }
     </script>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!-- GA_SCRIPT_START: Google Analytics 4. Ativado apenas com VITE_GA_MEASUREMENT_ID (formato G-XXXXXXX) no build. LGPD: avalie banner de consentimento. -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=__GA_MEASUREMENT_ID__"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', '__GA_MEASUREMENT_ID__');
+    </script>
+    <!-- GA_SCRIPT_END -->
+    <!-- FAQ_SCHEMA_START -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Vocês atendem em quais regiões?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Atendemos São Paulo e regiões próximas. Envie seu endereço pelo WhatsApp para confirmarmos a disponibilidade e o deslocamento."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Quanto tempo leva o reparo?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "O tempo depende do modelo e do serviço. Na avaliação, informamos a previsão antes de começar — sem surpresa no meio do caminho."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "A peça tem garantia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. Usamos peças selecionadas e explicamos a cobertura da garantia do serviço no orçamento."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "O atendimento é realmente em casa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim. Combinamos o melhor horário e levamos as ferramentas necessárias até você. Em alguns casos, indicamos a retirada segura do aparelho."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Como faço para pedir um orçamento?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Preencha a avaliação rápida ou chame no WhatsApp. Uma pessoa da equipe responde com os próximos passos."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Vocês mexem em iPhone e Android?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Atendemos os principais modelos de iPhone e Android. Informe o modelo exato para avaliarmos a peça correta."
+            }
+          }
+        ]
+      }
+    </script>
+    <!-- FAQ_SCHEMA_END -->
   </head>
   <body>
     <div id="root"></div>

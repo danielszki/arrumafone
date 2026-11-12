@@ -12,10 +12,6 @@
     {
       "source": "/avaliacao/",
       "destination": "/avaliacao/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ]
 }
