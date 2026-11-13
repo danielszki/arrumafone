@@ -1,0 +1,24 @@
+# ArrumaFone — conserto de celular em São Paulo
+
+> Assistência técnica de celular em domicílio na cidade de São Paulo: troca de tela, troca de bateria e reparo de conector de carga (USB-C e Lightning) para iPhone e Android, com orçamento aprovado antes do reparo e atendimento com hora marcada.
+
+## Serviços
+- [Conserto de celular em São Paulo](https://arrumafone.vercel.app/): atendimento em domicílio com técnico no endereço combinado.
+- [Troca de tela](https://arrumafone.vercel.app/#servicos): substituição de display quebrado, com teste de toque e brilho antes de fechar o aparelho.
+- [Troca de bateria](https://arrumafone.vercel.app/#servicos): para aparelhos que desligam cedo, incham ou esquentam durante o uso.
+- [Reparo de conector USB](https://arrumafone.vercel.app/#servicos): para celulares que só carregam em determinada posição ou não conectam ao computador.
+
+## Como funciona
+- [Como funciona o atendimento](https://arrumafone.vercel.app/#como-funciona): avaliação rápida, contato por WhatsApp, confirmação de região e horário, reparo no local.
+- [Avaliar meu aparelho](https://arrumafone.vercel.app/avaliacao): formulário com modelo e problema do aparelho para receber o orçamento.
+- [Dúvidas frequentes](https://arrumafone.vercel.app/#duvidas): regiões atendidas, prazo, garantia de peça e formas de orçamento.
+
+## Dados de contato
+- Telefone e WhatsApp: +55 11 97610-7921
+- Endereço: Rua Julio Rebollo Perez, 322 — São Paulo, SP
+- Área de atendimento: cidade de São Paulo (Pinheiros, Vila Mariana, Mooca, Tatuapé, Itaim Bibi, Perdizes, centro) e regiões próximas
+- Idioma: português (pt-BR)
+
+## Observações
+- O orçamento depende do modelo do aparelho, do tipo de peça e da complexidade do reparo; não há tabela fixa de preços.
+- Todas as informações de contato acima são as oficiais do site.

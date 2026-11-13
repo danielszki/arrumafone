@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+
+# IA / LLM
+# Consulte /llms.txt para um resumo estruturado do site.
+
 Sitemap: /sitemap.xml

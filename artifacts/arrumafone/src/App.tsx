@@ -1,7 +1,6 @@
 import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
-import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import {
   ArrowRight,
@@ -10,7 +9,6 @@ import {
   ChevronDown,
   Clock3,
   House,
-  Instagram,
   MapPin,
   Menu,
   MessageCircle,
@@ -311,6 +309,57 @@ function Home() {
           </div>
         </section>
 
+        <section className="border-t border-[#22394a] bg-[#0e1a2b] pb-24 pt-20" id="conserto-de-celular">
+          <div className="container-narrow">
+            <div className="grid gap-12 md:grid-cols-[1.15fr_.85fr] md:gap-16">
+              <div>
+                <p className="eyebrow mb-5">Conserto de celular em São Paulo</p>
+                <h2 className="font-display max-w-[600px] text-[34px] font-bold leading-[1.05] tracking-[-.05em] text-[#eef8f4] sm:text-[44px]">Conserto de celular em São Paulo, com o técnico na sua porta.</h2>
+                <div className="mt-7 space-y-5 text-[15px] leading-7 text-[#9fb6b8]">
+                  <p>Quando a tela racha, a bateria não segura a carga ou o conector USB para de encaixar, o conserto de celular em São Paulo costuma virar um dia inteiro: deslocamento, fila na assistência e prazo que ninguém confirma. O ArrumaFone encurta esse caminho. Você chama no WhatsApp, combina o horário e recebe o técnico no endereço que escolher — casa, trabalho ou o café da esquina.</p>
+                  <p>O conserto de celular em domicílio segue o mesmo padrão técnico de uma bancada: o aparelho é aberto com ferramenta adequada, a peça é conferida na sua frente e o teste é feito antes de fechar. A diferença é que você acompanha cada etapa, sem deixar o celular numa fila de terceiros por dias.</p>
+                  <h3 className="font-display pt-2 text-[20px] font-bold tracking-[-.03em] text-[#edf8f4]">Quais defeitos mais chegam para conserto</h3>
+                  <p>Os pedidos se repetem: <a href="/#servicos" className="font-semibold text-[#62ddd1] hover:underline">troca de tela</a> depois de queda, <a href="/#servicos" className="font-semibold text-[#62ddd1] hover:underline">troca de bateria</a> quando o aparelho desliga em 30% ou incha, e reparo do conector de carga quando o cabo só carrega em certa posição. Também aparecem alto-falante com som abafado, câmera embaçada e aparelho que aquece sem motivo aparente. Em todos os casos, o diagnóstico vem antes do orçamento: se o problema não for o que você imaginou, a gente explica e não mexe no que está bom.</p>
+                  <h3 className="font-display pt-2 text-[20px] font-bold tracking-[-.03em] text-[#edf8f4]">O que está incluído no atendimento</h3>
+                  <p>Peça selecionada, mão de obra e teste de funcionamento ficam no mesmo orçamento, aprovado por você antes de qualquer reparo. O conserto de celular em São Paulo feito em casa evita o custo invisível do deslocamento e o risco de transporte. Modelos iPhone e Android dos principais fabricantes são atendidos; basta informar o modelo exato na <Link href="/avaliacao" className="font-semibold text-[#62ddd1] hover:underline">avaliação rápida</Link> para conferirmos a disponibilidade da peça.</p>
+                  <h3 className="font-display pt-2 text-[20px] font-bold tracking-[-.03em] text-[#edf8f4]">Como o preço do conserto é definido</h3>
+                  <p>Três fatores mandam no valor: o modelo do aparelho, o tipo de peça e a complexidade da abertura. Um conserto de tela de iPhone não custa o mesmo de um Android intermediário, e um conector de carga pode exigir solda. Por isso não trabalhamos com tabela fixa no site: o orçamento é feito caso a caso, com a peça já definida. Você recebe o valor, decide com calma e só então agendamos o <Link href="/#como-funciona" className="font-semibold text-[#62ddd1] hover:underline">atendimento em domicílio</Link>.</p>
+                  <p>Atendemos São Paulo e região — Pinheiros, Vila Mariana, Mooca, Tatuapé, Itaim Bibi, Perdizes e centro. Confirme seu bairro pelo WhatsApp para checarmos a agenda do dia. Ficou com dúvida sobre o seu caso? As <Link href="/#duvidas" className="font-semibold text-[#62ddd1] hover:underline">perguntas frequentes</Link> respondem as mais comuns e, se precisar, o time continua no chat.</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="rounded-[20px] border border-[#263f4b] bg-[#142536] p-6">
+                  <h3 className="font-display text-[16px] font-bold tracking-[-.02em] text-[#e9f6f2]">Atendimento em São Paulo</h3>
+                  <p className="mt-3 text-[13px] leading-6 text-[#8ea7aa]">Técnico em domicílio com hora marcada, orçamento aprovado antes do reparo e garantia do serviço explicada no orçamento.</p>
+                  <address className="mt-5 space-y-2 border-t border-[#263f4b] pt-5 text-[13px] not-italic leading-6 text-[#9fb6b8]">
+                    <p className="flex items-start gap-2"><MapPin size={15} className="mt-1 shrink-0 text-[#62ddd1]" />Rua Julio Rebollo Perez, 322 — São Paulo, SP</p>
+                    <p className="flex items-center gap-2"><Phone size={15} className="shrink-0 text-[#62ddd1]" /><a href="tel:+5511976107921" className="font-semibold hover:text-[#62ddd1]" data-testid="link-content-phone">(11) 97610-7921</a></p>
+                    <p className="flex items-center gap-2"><MessageCircle size={15} className="shrink-0 text-[#62ddd1]" /><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-[#62ddd1]" data-testid="link-content-whatsapp">Falar no WhatsApp</a></p>
+                  </address>
+                </div>
+                <div className="rounded-[20px] border border-[#263f4b] bg-[#132638] p-6">
+                  <p className="text-[11px] font-bold uppercase tracking-[.18em] text-[#6e8d92]">Navegue</p>
+                  <nav aria-label="Links internos sobre conserto de celular" className="mt-4 flex flex-col gap-3 text-[13px] font-semibold text-[#a9c6c6]">
+                    <a href="/#servicos" className="hover:text-[#62ddd1]">Serviços de conserto de celular</a>
+                    <a href="/#como-funciona" className="hover:text-[#62ddd1]">Como funciona o atendimento</a>
+                    <a href="/#depoimentos" className="hover:text-[#62ddd1]">Avaliações de clientes</a>
+                    <Link href="/avaliacao" className="hover:text-[#62ddd1]">Avaliar meu aparelho</Link>
+                  </nav>
+                </div>
+                <div className="rounded-[20px] border border-[#263f4b] bg-[#142536] p-6">
+                  <h3 className="font-display text-[16px] font-bold tracking-[-.02em] text-[#e9f6f2]">O que conferimos antes de fechar</h3>
+                  <ul className="mt-4 space-y-2.5 text-[13px] leading-6 text-[#9fb6b8]">
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1.5 shrink-0 text-[#62ddd1]" />Toque e brilho em toda a extensão da tela</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1.5 shrink-0 text-[#62ddd1]" />Carga, conector e reconhecimento do cabo</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1.5 shrink-0 text-[#62ddd1]" />Câmeras, alto-falante e microfone</li>
+                    <li className="flex items-start gap-2"><Check size={14} className="mt-1.5 shrink-0 text-[#62ddd1]" />Sensores e conexão Wi-Fi/móvel</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#101e2e] py-24" id="duvidas">
           <div className="container-narrow grid gap-12 md:grid-cols-[.7fr_1.3fr]">
             <div><p className="eyebrow mb-5">Ainda com dúvida?</p><h2 className="font-display text-[37px] font-bold leading-[1.04] tracking-[-.05em] text-[#eff8f4] sm:text-[49px]">A resposta pode estar aqui.</h2><p className="mt-5 max-w-[300px] text-[14px] leading-6 text-[#8ea7aa]">Se não estiver, é só chamar no WhatsApp. A gente responde de verdade.</p><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="whatsapp-cta mt-7 inline-flex items-center gap-2 rounded-full px-5 py-3 text-[12px] font-bold" data-testid="link-faq-whatsapp"><MessageCircle size={15} /> Falar pelo WhatsApp</a></div>
@@ -329,7 +378,34 @@ function Home() {
 }
 
 function SiteFooter() {
-  return <footer className="bg-[#091521] py-10"><div className="container-narrow flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"><div><Link href="/" data-testid="link-footer-home"><BrandMark /></Link><p className="mt-4 max-w-[270px] text-[12px] leading-5 text-[#718b91]">Conserto de celular em domicílio, com transparência e cuidado em São Paulo.</p></div><div className="flex flex-col items-start gap-4 sm:items-end"><div className="flex items-center gap-4"><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Falar com a ArrumaFone no WhatsApp" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-whatsapp"><MessageCircle size={17} /></a><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram da ArrumaFone" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-instagram"><Instagram size={17} /></a><a href={`tel:+5511976107921`} aria-label="Ligar para a ArrumaFone" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-phone"><Phone size={17} /></a></div><p className="text-[11px] text-[#607a80]">© <span suppressHydrationWarning>{new Date().getFullYear()}</span> ArrumaFone · São Paulo, SP</p></div></div></footer>;
+  return (
+    <footer className="bg-[#091521] py-10">
+      <div className="container-narrow flex flex-col gap-9 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <Link href="/" data-testid="link-footer-home"><BrandMark /></Link>
+          <p className="mt-4 max-w-[270px] text-[12px] leading-5 text-[#718b91]">Conserto de celular em São Paulo, em domicílio, com transparência e cuidado.</p>
+          <address className="mt-4 text-[12px] not-italic leading-5 text-[#718b91]">
+            <span className="block">Rua Julio Rebollo Perez, 322 — São Paulo, SP</span>
+            <a href="tel:+5511976107921" className="mt-1 inline-block font-semibold text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-phone-text">Telefone: (11) 97610-7921</a>
+          </address>
+        </div>
+        <nav aria-label="Navegação do rodapé" className="flex flex-col gap-2.5 text-[12px] font-semibold text-[#8ba7aa] sm:items-end">
+          <a href="/#servicos" className="hover:text-[#62ddd1]">Serviços</a>
+          <a href="/#conserto-de-celular" className="hover:text-[#62ddd1]">Conserto de celular em São Paulo</a>
+          <a href="/#como-funciona" className="hover:text-[#62ddd1]">Como funciona</a>
+          <a href="/#duvidas" className="hover:text-[#62ddd1]">Dúvidas frequentes</a>
+          <Link href="/avaliacao" className="hover:text-[#62ddd1]">Avaliar meu aparelho</Link>
+        </nav>
+        <div className="flex flex-col items-start gap-4 sm:items-end">
+          <div className="flex items-center gap-4">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Falar com a ArrumaFone no WhatsApp" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-whatsapp"><MessageCircle size={17} /></a>
+            <a href="tel:+5511976107921" aria-label="Ligar para a ArrumaFone" className="text-[#8ba7aa] hover:text-[#62ddd1]" data-testid="link-footer-phone"><Phone size={17} /></a>
+          </div>
+          <p className="text-[11px] text-[#607a80]">© <span suppressHydrationWarning>{new Date().getFullYear()}</span> ArrumaFone · São Paulo, SP</p>
+        </div>
+      </div>
+    </footer>
+  );
 }
 
 type AssessmentFields = { name: string; phone: string; email: string; model: string; problem: string; preference: string; notes: string };
@@ -449,7 +525,7 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
 }
 
 function App({ ssrPath }: { ssrPath?: string }) {
-  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')} ssrPath={ssrPath}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
+  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')} ssrPath={ssrPath}><Router /></WouterRouter></TooltipProvider></QueryClientProvider>;
 }
 
 export default App;

@@ -74,6 +74,10 @@ await writeFile(
   path.join(outputDir, "robots.txt"),
   `User-agent: *
 Allow: /
+
+# IA / LLM
+# Consulte ${siteUrl}/llms.txt para um resumo estruturado do site.
+
 Sitemap: ${siteUrl}/sitemap.xml
 `,
 );
