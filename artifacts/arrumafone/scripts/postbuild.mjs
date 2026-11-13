@@ -48,17 +48,21 @@ const assessmentDir = path.join(outputDir, "avaliacao");
 await mkdir(assessmentDir, { recursive: true });
 await writeFile(path.join(assessmentDir, "index.html"), assessmentHtml);
 
+const sitemapDate = new Date().toISOString().slice(0, 10);
+
 await writeFile(
   path.join(outputDir, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${siteUrl}/</loc>
+    <lastmod>${sitemapDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>${siteUrl}/avaliacao</loc>
+    <lastmod>${sitemapDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

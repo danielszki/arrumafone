@@ -13,5 +13,13 @@
       "source": "/avaliacao/",
       "destination": "/avaliacao/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.arrumafone.vercel.app" }],
+      "destination": "https://arrumafone.vercel.app/$1",
+      "permanent": true
+    }
   ]
 }
