@@ -2,6 +2,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { initLinkTracking } from './lib/analytics';
 
 import './index.css';
 
@@ -25,3 +26,6 @@ if (container.hasChildNodes()) {
 } else {
   createRoot(container, options).render(app);
 }
+
+// Cliques em WhatsApp e telefone viram eventos no GA4.
+initLinkTracking();

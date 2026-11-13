@@ -2,6 +2,7 @@ import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { track } from '@/lib/analytics';
 import {
   ArrowRight,
   BatteryCharging,
@@ -453,6 +454,7 @@ function Assessment() {
         throw new Error(data?.error || 'Não foi possível enviar a avaliação agora. Tente novamente.');
       }
       setSubmitted(true);
+      track('generate_lead', { form: 'avaliacao', model: fields.model.trim() });
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Não foi possível enviar a avaliação agora. Tente novamente.');
     } finally {
