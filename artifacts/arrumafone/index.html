@@ -132,10 +132,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Google Tag Manager / Google tag (gtag.js): GTM-KBR4J2D5 -->
+    <!-- Google Tag Manager: GTM-KBR4J2D5 -->
     <script
       async
       src="https://www.googletagmanager.com/gtm.js?id=GTM-KBR4J2D5"
+    ></script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Analytics 4: G-N9ENQTNL81. Nao crie uma tag GA4 para esta
+         mesma propriedade dentro do GTM: haveria dupla contagem. -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-N9ENQTNL81"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -143,8 +150,9 @@
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
+      gtag('config', 'G-N9ENQTNL81');
     </script>
-    <!-- End Google tag -->
+    <!-- End Google Analytics 4 -->
     <!-- FAQ_SCHEMA_START -->
     <script type="application/ld+json">
       {
