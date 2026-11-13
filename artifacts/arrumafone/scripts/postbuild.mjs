@@ -27,7 +27,6 @@ let homeHtml = await readFile(indexPath, "utf8");
 homeHtml = homeHtml.replaceAll("__SITE_URL__", siteUrl);
 homeHtml = addGoogleVerification(homeHtml);
 homeHtml = inlineCriticalCss(homeHtml, outputDir);
-homeHtml = applyAnalytics(homeHtml);
 await writeFile(indexPath, homeHtml);
 
 let assessmentHtml = homeHtml;
@@ -114,17 +113,6 @@ function stripFaqSchema(html) {
     /<!-- FAQ_SCHEMA_START -->[\s\S]*?<!-- FAQ_SCHEMA_END -->\s*/,
     "",
   );
-}
-
-// GA4 só é publicado com um ID de medição real; sem ID, o bloco é removido.
-function applyAnalytics(html) {
-  const id = process.env.VITE_GA_MEASUREMENT_ID?.trim();
-  const block = html.match(
-    /<!-- GA_SCRIPT_START[\s\S]*?<!-- GA_SCRIPT_END -->\s*/,
-  );
-  if (!block) return html;
-  if (!id) return html.replace(block[0], "");
-  return html.replace(block[0], block[0].replaceAll("__GA_MEASUREMENT_ID__", id));
 }
 
 // Inline o CSS construído no HTML para eliminar o recurso bloqueante de
